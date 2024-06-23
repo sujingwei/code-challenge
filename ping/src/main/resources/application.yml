@@ -1,0 +1,7 @@
+server:
+  port: 8081
+
+# pong 地址
+pong:
+  server:
+    address: "http://localhost:8080"
