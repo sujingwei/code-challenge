@@ -37,7 +37,7 @@ java -jar .\ping-1.0.0.jar --server.port=8083
 ```
 如果pong服务的地址（包含端口）发生改变， 可以通过`--pong.server.address="http://localhost:8080"`参数指定pong服务的地下。
 
-#### 2.2 运行assisttest应用
+#### 2.3 运行assisttest应用
 assisttest-xxx.jar是为了给ping集群服务提供一个快速测试的脚本，它的主要业务逻辑是给ping集群服务发出请求，它的主要配置参数有以下3个：
 1. `--send.requests`，每秒发送请求的数量；默认为：6个
 2. `--send.seconds`，持续发出请求时间，单位为秒；默认为：10秒
