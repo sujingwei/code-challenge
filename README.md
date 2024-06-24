@@ -4,8 +4,8 @@
 ## 一、引言
 ### 1. 背景
 Imaging a simplified scenario where you are asked to implement 2 microservices called “ping” and “pong” respectively and integrates with each other as illustrated below...
-### 2. 编写目
-当前文档编写目标主要是从业务方向描述当前项目的设计架构，如当前项目有多少个模块，模块与模块之间的关系。如何安装并部署项目，如何运行测试脚本进行测试操作。
+### 2. 编写目的
+当前文档编写目的主要是从业务方向描述当前项目的设计架构，如当前项目有多少个模块，模块与模块之间的关系。如何安装并部署项目，如何运行测试脚本进行测试操作。
 
 ## 二、项目介绍
 项目名称为：code-challenge，包含3个子模块，分别为：
@@ -26,14 +26,14 @@ mvn clean package -Dmaven.test.skip=true
 pong默认的端口为:8080
 运行脚本如下 ：
 ```shell
-java -jar .\pong-1.0.0.jar --server.port=8080
+java -jar .pong-1.0.0.jar --server.port=8080
 ```
 #### 2.2 运行ping服务
 运行脚本如下 ：
 ```shell
-java -jar .\ping-1.0.0.jar --server.port=8081
-java -jar .\ping-1.0.0.jar --server.port=8082
-java -jar .\ping-1.0.0.jar --server.port=8083
+java -jar .ping-1.0.0.jar --server.port=8081
+java -jar .ping-1.0.0.jar --server.port=8082
+java -jar .ping-1.0.0.jar --server.port=8083
 ```
 如果pong服务的地址（包含端口）发生改变， 可以通过`--pong.server.address="http://localhost:8080"`参数指定pong服务的地下。
 
