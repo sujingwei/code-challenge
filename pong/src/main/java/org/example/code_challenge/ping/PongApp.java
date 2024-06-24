@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import java.util.concurrent.locks.ReentrantLock;
@@ -31,7 +32,7 @@ public class PongApp {
      * say world
      */
     @GetMapping("/")
-    public Mono<String> index() {
+    public Mono<String> index(@RequestParam(value = "p") String p) {
         lock.lock();
         try {
             long now = System.currentTimeMillis();
@@ -42,7 +43,7 @@ public class PongApp {
             } else {
                 throw new TooManyRequestsException(HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase());
             }
-            return Mono.just(",World");
+            return Mono.just(p + " ,World");
         } finally {
             lock.unlock();
         }

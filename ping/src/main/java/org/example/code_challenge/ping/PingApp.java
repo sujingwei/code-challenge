@@ -1,27 +1,27 @@
 package org.example.code_challenge.ping;
 
 import org.example.code_challenge.ping.component.FileLockComponent;
+import org.example.code_challenge.ping.component.Loggable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
 
 import java.nio.channels.FileLock;
-import java.util.Objects;
+import java.util.UUID;
 
 
 /**
@@ -50,11 +50,12 @@ public class PingApp {
         return new RestTemplate();
     }
 
+    @Loggable
     @GetMapping("/")
-    public Mono<String> index() {
-        String pong = pong();
+    public Mono<String> index(@RequestParam(value = "p") String p) {
+        String pong = pong(String.format("[%s]Hello", p));
         // 执行业务逻辑
-        return Mono.just("Hello" + pong);
+        return Mono.just(pong);
     }
 
     /**
@@ -62,25 +63,27 @@ public class PingApp {
      *
      * @return
      */
-    public String pong() {
+    public String pong(String hello) {
         FileLock lock = fileLockComponent.getLock();
         try {
             if (lock == null || !lock.isValid()) {
                 // 获取文件锁失败
                 throw new ForbiddenException(HttpStatus.FORBIDDEN.getReasonPhrase());
             }
-            log.info("request pong server, url:{}", pongServerAddress);
-            ResponseEntity<String> response = restTemplate.getForEntity(pongServerAddress, String.class);
-            log.info("请求pong服务, response is Null:{}, code:{}", false, response.getStatusCode().value());
+            // log.info("request pong server, url:{}", pongServerAddress);
+            ResponseEntity<String> response = restTemplate.getForEntity(pongServerAddress + "?p=" + hello, String.class);
+            // log.info("请求pong服务, response is Null:{}, code:{}", false, response.getStatusCode().value());
             return response.getBody();
-        } catch (HttpClientErrorException.TooManyRequests ex) {
-            // 429 异常
-            throw ex;
-        } catch (Exception e) {
-            // 记录其它异常，但不处理
-            log.error(e.getMessage());
-            throw e;
-        } finally {
+        }
+//        catch (HttpClientErrorException.TooManyRequests ex) {
+//            // 429 异常
+//            throw ex;
+//        } catch (Exception e) {
+//            // 记录其它异常，但不处理
+//            log.error(e.getMessage());
+//            throw e;
+//        }
+        finally {
             fileLockComponent.releaseLock(lock);
         }
     }

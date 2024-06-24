@@ -27,7 +27,7 @@ class PingAppTest extends Specification {
                     // 随机睡眠时间
                     int sleepTime = (int) (Math.random() * 3000)
                     Thread.sleep(sleepTime)
-                    results.add(webTestClient.get().uri("/").exchange());
+                    results.add(webTestClient.get().uri("/?p=" + UUID.randomUUID().toString().substring(0, 8)).exchange());
                 } finally {
                     latch.countDown()
                 }
