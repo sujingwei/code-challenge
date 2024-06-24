@@ -28,6 +28,7 @@ replay_pid*
 target/
 ping/target/
 pong/target/
+assisttest/target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
