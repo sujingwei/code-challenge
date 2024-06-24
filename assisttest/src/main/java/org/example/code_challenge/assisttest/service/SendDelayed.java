@@ -6,7 +6,6 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 public class SendDelayed implements Delayed {
-    private long delayTime;
     private long expireTime;
 
     private String url;
@@ -14,7 +13,6 @@ public class SendDelayed implements Delayed {
     private SendService sendService;
 
     public SendDelayed(long delayTime, String url, SendService sendService) {
-        this.delayTime = delayTime;
         this.expireTime = System.currentTimeMillis() + delayTime;
         this.url = url;
         this.sendService = sendService;
