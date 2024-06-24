@@ -74,6 +74,7 @@ public class PingApp {
             log.info("请求pong服务, response is Null:{}, code:{}", false, response.getStatusCode().value());
             return response.getBody();
         } catch (HttpClientErrorException.TooManyRequests ex) {
+            // 429 异常
             throw ex;
         } catch (Exception e) {
             // 记录其它异常，但不处理
@@ -87,7 +88,6 @@ public class PingApp {
     /**
      * 429 异常
      *
-     * @param e
      * @return
      */
     @ExceptionHandler(HttpClientErrorException.TooManyRequests.class)

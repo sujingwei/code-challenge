@@ -18,6 +18,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 文件锁
+ */
 @Component
 public class FileLockComponent {
     private final static Logger log = LoggerFactory.getLogger(FileLockComponent.class);
@@ -26,7 +29,6 @@ public class FileLockComponent {
     private final static File LOCK_FILE_0 = new File(FileUtils.getTempDirectory(), "fileLock_0.lock");
     // file 1
     private final static File LOCK_FILE_1 = new File(FileUtils.getTempDirectory(), "fileLock_1.lock");
-
 
     private RandomAccessFile f0 = null, f1 = null;
     private FileChannel c0 = null, c1 = null;
