@@ -26,14 +26,14 @@ mvn clean package -Dmaven.test.skip=true
 pong默认的端口为:8080
 运行脚本如下 ：
 ```shell
-java -jar .pong-1.0.0.jar --server.port=8080
+java -jar pong-1.0.0.jar --server.port=8080
 ```
 #### 2.2 运行ping服务
 运行脚本如下 ：
 ```shell
-java -jar .ping-1.0.0.jar --server.port=8081
-java -jar .ping-1.0.0.jar --server.port=8082
-java -jar .ping-1.0.0.jar --server.port=8083
+java -jar ping-1.0.0.jar --server.port=8081
+java -jar ping-1.0.0.jar --server.port=8082
+java -jar ping-1.0.0.jar --server.port=8083
 ```
 如果pong服务的地址（包含端口）发生改变， 可以通过`--pong.server.address="http://localhost:8080"`参数指定pong服务的地下。
 
