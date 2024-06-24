@@ -49,13 +49,11 @@ public class SendService {
         for (int i = 0; i < seconds; i++) {
             for (int j = 0; j < requests; j++) {
                 String url = addressArray[j % addressArray.length] + "?p=" + UUID.randomUUID().toString().substring(0, 8);
-                long random = (long) (Math.random() * 300) + (3 + i) * 1000L; //
+                long random = (long) (Math.random() * 850) + (4 + i) * 1000L; //
                 queue.add(new SendDelayed(random, url, this));
             }
         }
-
         CountDownLatch latch = new CountDownLatch(seconds*requests);
-
         while (!queue.isEmpty()) {
             SendDelayed task = queue.take();
             // 异步执行
