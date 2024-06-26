@@ -1,4 +1,4 @@
-package org.example.code_challenge.ping;
+package org.example.code_challenge.pong;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
