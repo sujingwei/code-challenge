@@ -1,8 +1,7 @@
 package org.example.code_challenge.ping;
 
 import org.example.code_challenge.ping.component.FileLockComponent;
-import org.example.code_challenge.ping.component.Loggable;
-import org.slf4j.Logger;
+import org.example.code_challenge.ping.component.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
 
 import java.nio.channels.FileLock;
-import java.util.UUID;
 
 
 /**
@@ -30,7 +28,7 @@ import java.util.UUID;
 @SpringBootApplication
 @RestController
 public class PingApp {
-    private final static Logger log = LoggerFactory.getLogger(PingApp.class);
+    private final static org.slf4j.Logger log = LoggerFactory.getLogger(PingApp.class);
     @Value("${pong.server.address}")
     private String pongServerAddress;
 
@@ -50,7 +48,7 @@ public class PingApp {
         return new RestTemplate();
     }
 
-    @Loggable
+    @Logger
     @GetMapping("/")
     public Mono<String> index(@RequestParam(value = "p") String p) {
         String pong = pong(String.format("[%s]Hello", p));
@@ -74,16 +72,7 @@ public class PingApp {
             ResponseEntity<String> response = restTemplate.getForEntity(pongServerAddress + "?p=" + hello, String.class);
             // log.info("请求pong服务, response is Null:{}, code:{}", false, response.getStatusCode().value());
             return response.getBody();
-        }
-//        catch (HttpClientErrorException.TooManyRequests ex) {
-//            // 429 异常
-//            throw ex;
-//        } catch (Exception e) {
-//            // 记录其它异常，但不处理
-//            log.error(e.getMessage());
-//            throw e;
-//        }
-        finally {
+        } finally {
             fileLockComponent.releaseLock(lock);
         }
     }

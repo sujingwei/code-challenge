@@ -20,7 +20,7 @@ import java.util.Objects;
 public class LoggingAspect {
     private final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Around("@annotation(Loggable)")
+    @Around("@annotation(Logger)")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         // 日志输出格式
         String logFormat = "ping send:%s, pong respond:[%d,%s]";
